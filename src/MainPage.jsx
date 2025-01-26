@@ -11,12 +11,14 @@ import {
   Select,
   MenuItem,
   Autocomplete,
+  AppBar,
+  Toolbar,
   Grid2,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import countries from "./data/countries.json";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
-// Creating a dark theme
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -40,9 +42,7 @@ const App = () => {
   const [country, setCountry] = useState("");
   const resultsRef = useRef(null);
 
-  // Get country names from the world-countries library
   const countryList = countries.map((c) => c.name.common);
-  console.log(countries);
   const currencies = [
     { code: "USD", symbol: "$" },
     { code: "EUR", symbol: "€" },
@@ -54,9 +54,10 @@ const App = () => {
     { code: "CNY", symbol: "¥" },
     { code: "INR", symbol: "₹" },
   ];
+
   const handleCompute = () => {
     setSafestPlace("Tokyo, Japan");
-    setSafestInvestment(" Zurich, Switzerland ");
+    setSafestInvestment("Zurich, Switzerland");
     if (resultsRef.current) {
       resultsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -64,31 +65,74 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container
-        maxWidth="md"
+      <AppBar
+        position="sticky"
         sx={{
-          background:
-            "url(/undraw_the-search_cjxa.svg) center center / cover no-repeat",
-          height: "100vh", // Full height background
-          animation: "moveBackground 5s infinite linear",
+          backgroundColor: "black",
+          borderBottom: "2px solid #FFFFFF",
+          padding: "5px",
         }}>
-        <Box my={2}>
-          <Typography
-            variant="h3"
-            gutterBottom
-            align="center"
-            color="textPrimary">
-            Welcome to Your Investment Advisor
+        <Toolbar>
+          <Box sx={{ flexGrow: 0.5 }}>
+            <img src="/logo.png" alt="logo" style={{ width: "100px" }} />
+          </Box>
+          <Button color="inherit">Logo</Button>
+          <Button color="inherit">Compute</Button>
+          <Button color="inherit">Result</Button>
+        </Toolbar>
+      </AppBar>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: "100vh",
+          padding: 10,
+          backgroundColor: "#121212",
+          color: "white",
+        }}>
+        <Box>
+          <Typography variant="h2" gutterBottom>
+            Welcome to Smart Safety
           </Typography>
-          <Typography variant="h6" align="center" color="textSecondary">
+          <Typography variant="h5">
+            Your personalized investment advisor for secure savings and
+            investments.
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            width: 500,
+            height: 500,
+          }}>
+          <DotLottieReact
+            src="https://lottie.host/76b08c78-a0de-47b4-9de9-c89e3612fe2c/dgABlnL66X.lottie"
+            loop
+            autoplay
+          />
+        </Box>
+      </Box>
+
+      {/* Main Content */}
+      <Container>
+        <Box mt={4} sx={{ height: "100vh" }}>
+          <Typography
+            variant="h6"
+            align="center"
+            color="textSecondary"
+            mb={4}
+            mt={10}>
             Enter your preferences to find the safest place and investment type
             for your money!
           </Typography>
 
-          <Box sx={{ height: "100vh" }}>
+          <Box>
             <Paper
               sx={{
                 padding: 3,
+                width: "80%",
+                margin: "1px auto",
                 backgroundColor: "background.paper",
               }}>
               <Box mb={2}>
@@ -132,7 +176,6 @@ const App = () => {
                   fullWidth
                 />
               </Box>
-
               <Box mb={2}>
                 <TextField
                   fullWidth
@@ -154,111 +197,138 @@ const App = () => {
               </Box>
             </Paper>
           </Box>
+        </Box>
 
+        {/* Results Section */}
+        <Box
+          my={4}
+          ref={resultsRef}
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}>
           <Box
-            my={4}
-            ref={resultsRef}
             sx={{
-              height: "100vh",
               width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              backgroundColor: "background.paper",
               borderRadius: "5px",
-            }}>
-            <Box
-              sx={{
-                maxWidth: "1200px",
-                width: "100%",
-                backgroundColor: "background.paper",
-              }}
-              p={2}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
-                Results:
-              </Typography>
-              <Grid2 container spacing={2}>
-                <Grid2 item xs={12} sm={6} mx={3}>
+            }}
+            p={2}>
+            <Typography variant="h4" color="textPrimary" gutterBottom>
+              Results
+            </Typography>
+            <Grid2 container spacing={6}>
+              {/* Safest Place to Save */}
+              <Grid2 item xs={12} sm={6}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    border: 1,
+                    borderColor: "grey.300",
+                    borderRadius: 2,
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                  }}>
+                  <Typography variant="h6" color="textPrimary" gutterBottom>
+                    Safest Place to Save
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    gutterBottom>
+                    {`The safest place for your money is in ${safestPlace} ` ||
+                      "No data available"}
+                  </Typography>
                   <Box
-                    sx={{ width: "100%" }}
-                    border={1}
-                    borderColor="grey.300"
+                    height={300}
                     borderRadius={2}
-                    p={2}
+                    overflow="hidden"
+                    width="100%"
                     display="flex"
-                    flexDirection="column"
-                    alignItems="center"
                     justifyContent="center">
-                    <Typography variant="h6" color="textPrimary" gutterBottom>
-                      Safest Place to Save
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      gutterBottom>
-                      {`The safest place for your money is in ${safestPlace}` ||
-                        "No data available"}
-                    </Typography>
-                    <Box
-                      height={300}
-                      borderRadius={2}
-                      overflow="hidden"
-                      width="100%"
-                      display="flex"
-                      justifyContent="center">
-                      {/* Map for Safest Place */}
-                      <iframe
-                        title="Safest Place Map"
-                        src={`https://www.google.com/maps?q=${safestPlace}&output=embed`}
-                        width="100%"
-                        height="100%"
-                        style={{ border: "none" }}
-                      />
-                    </Box>
+                    {/* Map for Safest Place */}
+                    <iframe
+                      title="Safest Place Map"
+                      src={`https://www.google.com/maps?q=${safestPlace}&output=embed`}
+                      width="450px"
+                      height="100%"
+                      style={{ border: "none" }}
+                    />
                   </Box>
-                </Grid2>
-
-                {/* Safest Investment */}
-                <Grid2 item xs={12} sm={6}>
-                  <Box
-                    sx={{ width: "100%" }}
-                    border={1}
-                    borderColor="grey.300"
-                    borderRadius={2}
-                    p={2}
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center">
-                    <Typography variant="h6" color="textPrimary" gutterBottom>
-                      Safest Investment
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      gutterBottom>
-                      {`The safest investment place is in ${safestInvestment}` ||
-                        "No data available"}
-                    </Typography>
-                    <Box
-                      height={300}
-                      borderRadius={2}
-                      overflow="hidden"
-                      width="100%"
-                      display="flex"
-                      justifyContent="center">
-                      {/* Map for Safest Investment */}
-                      <iframe
-                        title="Safest Investment Map"
-                        src={`https://www.google.com/maps?q=${safestInvestment}&output=embed`}
-                        width="100%"
-                        height="100%"
-                        style={{ border: "none" }}
-                      />
-                    </Box>
+                  {/* Go to Button */}
+                  <Box mt={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      href={`https://www.google.com/maps?q=${safestPlace}`}
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Go to
+                    </Button>
                   </Box>
-                </Grid2>
+                </Box>
               </Grid2>
-            </Box>
+
+              {/* Safest Investment */}
+              <Grid2 item xs={12} sm={6}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    border: 1,
+                    borderColor: "grey.300",
+                    borderRadius: 2,
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                  <Typography variant="h6" color="textPrimary" gutterBottom>
+                    Safest Investment
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    gutterBottom>
+                    {`The safest investment place is in ${safestInvestment} ` ||
+                      "No data available"}
+                  </Typography>
+                  <Box
+                    height={300}
+                    borderRadius={2}
+                    overflow="hidden"
+                    width="100%"
+                    display="flex"
+                    justifyContent="center">
+                    {/* Map for Safest Investment */}
+                    <iframe
+                      title="Safest Investment Map"
+                      src={`https://www.google.com/maps?q=${safestInvestment}&output=embed`}
+                      width="450px"
+                      height="100%"
+                      style={{ border: "none" }}
+                    />
+                  </Box>
+                  {/* Go to Button */}
+                  <Box mt={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      href={`https://www.google.com/maps?q=${safestInvestment}`}
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Go to
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid2>
+            </Grid2>
           </Box>
         </Box>
       </Container>
