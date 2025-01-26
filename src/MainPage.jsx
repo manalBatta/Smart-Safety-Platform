@@ -31,6 +31,20 @@ const theme = createTheme({
       secondary: "#b0b0b0",
     },
   },
+  typography: {
+    fontFamily: "'Inter', sans-serif",
+    h1: {
+      fontFamily: "'Merriweather', serif",
+      fontWeight: 700,
+    },
+    h2: {
+      fontFamily: "'Merriweather', serif",
+      fontWeight: 600,
+    },
+    body1: {
+      fontFamily: "'Inter', sans-serif",
+    },
+  },
 });
 
 const App = () => {
@@ -269,7 +283,7 @@ const App = () => {
                       href={`https://www.google.com/maps?q=${safestPlace}`}
                       target="_blank"
                       rel="noopener noreferrer">
-                      Go to
+                      Investment
                     </Button>
                   </Box>
                 </Box>
@@ -323,7 +337,7 @@ const App = () => {
                       href={`https://www.google.com/maps?q=${safestInvestment}`}
                       target="_blank"
                       rel="noopener noreferrer">
-                      Go to
+                      Safety
                     </Button>
                   </Box>
                 </Box>
